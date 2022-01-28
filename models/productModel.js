@@ -1,7 +1,7 @@
 const connection = require('./connection');
 
 const insert = async ({ name, quantity }) => {
-  const [products] = await connection.execute(
+  const [products] = await connection.query(
       'INSERT INTO products VALUES (?, ?)', [name, quantity],
       );
 
