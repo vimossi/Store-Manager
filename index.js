@@ -16,13 +16,13 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Escutando na porta ${process.env.PORT}`);
-});
-
 app.post(
   '/products',
   validateName,
   validateQuantity,
   productController.insert,
 );
+
+app.listen(process.env.PORT, () => {
+  console.log(`Escutando na porta ${process.env.PORT}`);
+});
