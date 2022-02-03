@@ -11,10 +11,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.send();
 });
+
+app.use('/products', productController);
 
 app.post(
   '/products',
@@ -23,6 +24,8 @@ app.post(
   productController.insert,
 );
 
-app.listen(process.env.PORT, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
 });

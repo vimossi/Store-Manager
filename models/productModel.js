@@ -1,17 +1,24 @@
 const connection = require('./connection');
 
-const insert = async ({ name, quantity }) => {
-  const [products] = await connection.query(
+async function getAll() {
+  const [products] = await connection.execute('SELECT * FROM products');
+  
+  return products;
+}
+
+async function create({ name, quantity }) {
+  const [newProduct] = await connection.execute(
       'INSERT INTO products VALUES (?, ?)', [name, quantity],
-      );
+  );
 
   return {
-      id: products.insertId,
+      id: newProduct.insertId,
       name,
       quantity,
   };
-};
+}
 
 module.exports = {
-  insert,
+  create,
+  getAll,
 };

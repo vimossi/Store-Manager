@@ -1,13 +1,12 @@
+const products = require('express').Router();
+const rescue = require('express-rescue');
+
 const productService = require('../services/productService');
 
-const insert = async (req, res) => {
-  const { name, quantity } = req.body;
+products.get('/', rescue(async (req, res) => {
+  const result = await productService.getAll();
 
-  const newProduct = await productService.insert({ name, quantity });
+  res.status(200).json(result);
+}));
 
-  res.status(201).json(newProduct);
-};
-
-module.exports = {
-  insert,
-};
+module.exports = products;
