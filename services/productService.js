@@ -1,16 +1,31 @@
-const productModel = require('../models/productModel'); 
+const productModel = require('../models/productModel');
+const ConflictError = require('./errors/conflict');
 
-async function insert(name, quantity) {
-  const newProduct = await productModel.insert(name, quantity);
+const getAll = async () => {
+  const products = await productModel.getAll();
+  return products;
+};
+
+const getById = async (id) => {
+  const product = await productModel.getById(id);
+  return product;
+};
+
+const getByName = async (name) => {
+  const product = await productModel.getByName(name);
+  return product;
+};
+
+const create = async (name, quantity) => {
+  const exists = await getByName(name);
+  if (exists) throw new ConflictError();
+
+  const newProduct = await productModel.create(name, quantity);
   return newProduct;
-}
-
-async function getAll() {
-  const getAllProduct = await productModel.getAll();
-  return getAllProduct;
-}
+};
 
 module.exports = {
-  insert,
   getAll,
+  getById,
+  create,
 };
