@@ -1,5 +1,5 @@
 const productModel = require('../models/productModel');
-const ConflictError = require('./errors/conflict');
+const ConflictError = require('../errors/conflict');
 
 const getAll = async () => {
   const products = await productModel.getAll();

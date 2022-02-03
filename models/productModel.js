@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const NotFoundError = require('../errors/notFound');
 
 async function getAll() {
   const [products] = await connection.execute(
@@ -9,13 +10,15 @@ async function getAll() {
 }
 
 async function getById(id) {
-  const product = await connection.execute('SELECT * FROM products WHERE id = ?', [id]);
-  return product[0][0];
+  const [product] = await connection.execute('SELECT * FROM products WHERE id = ?', [id]);
+  if (product.length <= 0) throw new NotFoundError();
+
+  return product[0];
 }
 
 async function getByName(name) {
-  const product = await connection.execute('SELECT * FROM products WHERE name = ?', [name]);
-  return product[0][0];
+  const [product] = await connection.execute('SELECT * FROM products WHERE name = ?', [name]);
+  return product[0];
 }
 
 async function create(name, quantity) {
