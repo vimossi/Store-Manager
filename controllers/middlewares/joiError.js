@@ -14,7 +14,5 @@ module.exports = (err, _req, res, next) => {
 
   const status = errorMap[err.details[0].type];
 
-  res
-    .status(status)
-    .json({ message: err.details[0].message });
+  res.status(status).json({ message: err.details[0].message });
 };

@@ -1,5 +1,6 @@
 const productModel = require('../models/productModel');
 const ConflictError = require('../errors/conflict');
+const NotFoundError = require('../errors/notFound');
 
 const getAll = async () => {
   const products = await productModel.getAll();
@@ -8,24 +9,34 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const product = await productModel.getById(id);
-  return product;
-};
-
-const getByName = async (name) => {
-  const product = await productModel.getByName(name);
+  if (!product) throw new NotFoundError();
   return product;
 };
 
 const create = async (name, quantity) => {
-  const exists = await getByName(name);
+  const exists = await productModel.getByName(name);
   if (exists) throw new ConflictError();
 
   const newProduct = await productModel.create(name, quantity);
   return newProduct;
 };
 
+const update = async (id, name, quantity) => {
+  const product = await productModel.getById(id);
+  if (!product) throw new NotFoundError();
+
+  const updatedProduct = await productModel.update(
+    id,
+    name,
+    quantity,
+  );
+
+  return updatedProduct;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };

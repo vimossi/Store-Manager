@@ -3,7 +3,5 @@ module.exports = (err, _req, res, next) => {
     return next(err);
   }
 
-  res
-    .status(err.code)
-    .json({ message: err.message });
+  res.status(err.code).json({ message: err.message });
 };
