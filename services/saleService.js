@@ -28,17 +28,20 @@ const create = async (items) => {
   };
 };
 
-const update = async (saleId, newId, newQuantity) => {
+const update = async (saleId, updatedItems) => {
   const sale = await salesModel.getById(saleId);
   if (sale.length <= 0) throw new NotFoundError('Sale not found');
 
-  const updatedProduct = await salesModel.update(
-    saleId,
-    newId,
-    newQuantity,
-  );
+  await Promise.all(updatedItems.map(async (updatedItem) => {
+    const idKey = 'product_id'; // mantém snake_case
+    const { [idKey]: productId, quantity: newQuantity } = updatedItem;
+    await salesModel.update(saleId, productId, newQuantity);
+  }));
 
-  return updatedProduct;
+  return {
+    saleId,
+    itemUpdated: updatedItems,
+  };
 };
 
 module.exports = {
