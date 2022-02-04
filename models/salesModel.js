@@ -10,7 +10,12 @@ const getAll = async () => {
     ON (${salesTable}.id = ${joinedTable}.sale_id)`,
   );
 
-  return sales;
+  const salesPretty = sales.map(({ sale_id: saleId, ...rest }) => ({
+    saleId,
+    ...rest,
+  }));
+
+  return salesPretty;
 };
 
 const getById = async (saleId) => {

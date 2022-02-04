@@ -6,8 +6,8 @@ const getAll = async () => {
   return sales;
 };
 
-const getById = async (id) => {
-  const sale = await salesModel.getById(id);
+const getById = async (saleId) => {
+  const sale = await salesModel.getById(saleId);
   if (sale.length <= 0) throw new NotFoundError('Sale not found');
 
   return sale;
@@ -28,8 +28,22 @@ const create = async (items) => {
   };
 };
 
+const update = async (saleId, newId, newQuantity) => {
+  const sale = await salesModel.getById(saleId);
+  if (sale.length <= 0) throw new NotFoundError('Sale not found');
+
+  const updatedProduct = await salesModel.update(
+    saleId,
+    newId,
+    newQuantity,
+  );
+
+  return updatedProduct;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };

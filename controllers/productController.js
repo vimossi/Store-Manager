@@ -10,19 +10,19 @@ const {
 } = require('../services/productService');
 const validateProduct = require('./schemas/productSchema');
 
-products.get('/', rescue(async (req, res) => {
+products.get('/', rescue(async (_req, res, _next) => {
   const result = await getAll();
   res.status(200).json(result);
 }));
 
-products.get('/:id', rescue(async (req, res) => {
+products.get('/:id', rescue(async (req, res, _next) => {
   const { id } = req.params;
   const product = await getById(id);
 
   res.status(200).json(product);
 }));
 
-products.post('/', rescue(async (req, res) => {
+products.post('/', rescue(async (req, res, _next) => {
   validateProduct(req.body);
 
   const { name, quantity } = req.body;
@@ -31,7 +31,7 @@ products.post('/', rescue(async (req, res) => {
   res.status(201).json(newProduct);
 }));
 
-products.put('/:id', rescue(async (req, res) => {
+products.put('/:id', rescue(async (req, res, _next) => {
   validateProduct(req.body);
 
   const { id } = req.params;
@@ -41,7 +41,7 @@ products.put('/:id', rescue(async (req, res) => {
   res.status(200).json(updatedProduct);
 }));
 
-products.delete('/:id', rescue(async (req, res) => {
+products.delete('/:id', rescue(async (req, res, _next) => {
   const { id } = req.params;
   const deletedProduct = await remove(id);
 
