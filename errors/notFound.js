@@ -1,5 +1,5 @@
-function NotFoundError() {
-  this.message = 'Product not found';
+function NotFoundError(message) {
+  this.message = message;
   this.code = 404;
 }
 

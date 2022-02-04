@@ -1,5 +1,5 @@
-function ConflictError() {
-  this.message = 'Product already exists';
+function ConflictError(message) {
+  this.message = message;
   this.code = 409;
 }
 

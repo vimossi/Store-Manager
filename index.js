@@ -1,12 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const productController = require('./controllers/productController');
 const {
   joiError,
   domainError,
   error,
 } = require('./controllers/middlewares');
+const products = require('./controllers/productController');
+const sales = require('./controllers/salesController');
 
 // const {
 //   validateName,
@@ -22,7 +23,8 @@ app.get('/', (_request, response) => {
 });
 
 /* Rotas */ 
-app.use('/products', productController);
+app.use('/products', products);
+app.use('/sales', sales);
 
 // app.post(
 //   '/products',

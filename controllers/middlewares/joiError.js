@@ -9,6 +9,7 @@ module.exports = (err, _req, res, next) => {
     'any.required': 400,
     'number.base': 422,
     'number.min': 422,
+    'string.base': 422,
     'string.min': 422,
   };
 

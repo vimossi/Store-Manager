@@ -9,13 +9,13 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const product = await productModel.getById(id);
-  if (!product) throw new NotFoundError();
+  if (!product) throw new NotFoundError('Product not found');
   return product;
 };
 
 const create = async (name, quantity) => {
   const exists = await productModel.getByName(name);
-  if (exists) throw new ConflictError();
+  if (exists) throw new ConflictError('Product already exists');
 
   const newProduct = await productModel.create(name, quantity);
   return newProduct;
@@ -23,7 +23,7 @@ const create = async (name, quantity) => {
 
 const update = async (id, name, quantity) => {
   const product = await productModel.getById(id);
-  if (!product) throw new NotFoundError();
+  if (!product) throw new NotFoundError('Product not found');
 
   const updatedProduct = await productModel.update(
     id,
@@ -36,7 +36,7 @@ const update = async (id, name, quantity) => {
 
 const remove = async (id) => {
   const product = await productModel.getById(id);
-  if (!product) throw new NotFoundError();
+  if (!product) throw new NotFoundError('Product not found');
 
   await productModel.remove(id);
 
