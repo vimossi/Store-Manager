@@ -28,34 +28,34 @@ const create = async (items) => {
   };
 };
 
-const update = async (saleId, newId, newQuantity) => {
-  const sale = await salesModel.getById(saleId);
-  if (sale.length <= 0) throw new NotFoundError('Sale not found');
-
-  const updatedProduct = await salesModel.update(
-    saleId,
-    newId,
-    newQuantity,
-  );
-
-  return updatedProduct;
-};
-
-// const update = async (saleId, updatedItems) => {
+// const update = async (saleId, newId, newQuantity) => {
 //   const sale = await salesModel.getById(saleId);
 //   if (sale.length <= 0) throw new NotFoundError('Sale not found');
 
-//   await Promise.all(updatedItems.map(async (updatedItem) => {
-//     const idKey = 'product_id'; // mantém snake_case
-//     const { [idKey]: productId, quantity: newQuantity } = updatedItem;
-//     await salesModel.update(saleId, productId, newQuantity);
-//   }));
-
-//   return {
+//   const updatedProduct = await salesModel.update(
 //     saleId,
-//     itemUpdated: updatedItems,
-//   };
+//     newId,
+//     newQuantity,
+//   );
+
+//   return updatedProduct;
 // };
+
+const update = async (saleId, updatedItems) => {
+  const sale = await salesModel.getById(saleId);
+  if (sale.length <= 0) throw new NotFoundError('Sale not found');
+
+  await Promise.all(updatedItems.map(async (updatedItem) => {
+    const idKey = 'product_id'; // mantém snake_case
+    const { [idKey]: productId, quantity: newQuantity } = updatedItem;
+    await salesModel.update(saleId, productId, newQuantity);
+  }));
+
+  return {
+    saleId,
+    itemUpdated: updatedItems,
+  };
+};
 
 module.exports = {
   getAll,

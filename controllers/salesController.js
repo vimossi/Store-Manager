@@ -30,11 +30,17 @@ sales.post('/', rescue(async (req, res, _next) => {
   res.status(201).json(newSale);
 }));
 
-sales.post('/:id', rescue(async (req, res, _next) => {
-  const { body: updatedItems } = req;
+sales.put('/:id', rescue(async (req, res, _next) => {
+  const {
+    body: updatedItems,
+    params: {
+      id: saleId,
+    },
+  } = req;
+
   validateSale(updatedItems);
 
-  const updatedSale = await update(updatedItems);
+  const updatedSale = await update(saleId, updatedItems);
   res.status(200).json(updatedSale);
 }));
 
