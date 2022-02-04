@@ -53,6 +53,8 @@ const update = async (saleId, productId, newQuantity) => {
   );
 };
 
+// teste
+
 module.exports = {
   getAll,
   getById,
