@@ -45,13 +45,13 @@ const sell = async (saleId, productId, quantity) => {
   );
 };
 
-const update = async (saleId, productId, newQuantity) => {
-  await connection.execute(
-    `UPDATE ${joinedTable} SET quantity = ?
-    WHERE (sale_id = ? AND product_id = ?)`,
-    [newQuantity, saleId, productId],
-  );
-};
+// const update = async (saleId, productId, newQuantity) => {
+//   await connection.execute(
+//     `UPDATE ${joinedTable} SET quantity = ?
+//     WHERE (sale_id = ? AND product_id = ?)`,
+//     [newQuantity, saleId, productId],
+//   );
+// };
 
 // teste
 
@@ -60,5 +60,5 @@ module.exports = {
   getById,
   create,
   sell,
-  update,
+  // update,
 };
