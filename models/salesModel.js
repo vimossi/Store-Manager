@@ -42,6 +42,7 @@ const sell = async (saleId, productId, quantity) => {
 
 module.exports = {
   getAll,
+  getById,
   create,
   sell,
 };
