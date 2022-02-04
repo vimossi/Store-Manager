@@ -31,7 +31,7 @@ products.post('/', rescue(async (req, res) => {
   res.status(201).json(newProduct);
 }));
 
-products.post('/:id', rescue(async (req, res) => {
+products.put('/:id', rescue(async (req, res) => {
   validateProduct(req.body);
 
   const { id } = req.params;
